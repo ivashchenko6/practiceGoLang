@@ -6,7 +6,6 @@ type Vehicle interface {
 	Drive()
 	Brake()
 	CurrentGasoline() int
-	//Refuel()
 }
 
 type Refueler interface {
