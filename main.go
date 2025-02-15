@@ -5,18 +5,20 @@ import (
 	"fmt"
 
 	"example.com/practice/car"
+	"example.com/practice/gasStation"
 )
 
 func main() {
-	var mainCar car.Car = car.Car{"Kia", 2024, "Forte GT-line", 400, 305}
+	var mainCar car.Car = car.Car{CarBrand: "Kia", CarYear: 2024, CarModel: "Forte GT-line", FuelCapacity: 400, CurrentFuel: 305}
+	var shell gasStation.GasStation = gasStation.GasStation{GasTypes: []int{87, 89, 91}, GasPrices: []float64{3.99, 4.19, 4.50}}
+	gasType, gasPrice := getCurrentGasInformation(shell) //Возвращает тип бензина и стоимость
 
-	gasType, gasPrice := getCurrentGasInformation() //Возвращает тип бензина и стоимость
-
+	fmt.Println(mainCar, gasType, gasPrice)
 }
 
-func getCurrentGasInformation() (int, float64) { //Возвращает выбранный Бензин и Стоимость
-	var gasTypes [3]int = [3]int{87, 89, 91}
-	var gasPrices [3]float64 = [3]float64{3.99, 4.19, 4.50}
+func getCurrentGasInformation(currentGasolineStation gasStation.GasStation) (int, float64) { //Возвращает выбранный Бензин и Стоимость
+	var gasTypes [3]int = [3]int(currentGasolineStation.GasTypes)
+	var gasPrices [3]float64 = [3]float64(currentGasolineStation.GasPrices)
 
 	fmt.Println("Welcome to the Shell Gas Station:")
 	fmt.Println("What gas type will you use? 87, 89, 91  or -1 to exit: ")
@@ -27,7 +29,7 @@ func getCurrentGasInformation() (int, float64) { //Возвращает выбр
 		if userChoice == -1 {
 			fmt.Println("Goodbye!")
 			panic("")
-		} else if userChoice != 87 || userChoice == 89 || userChoice == 91 {
+		} else if userChoice != 87 && userChoice != 89 && userChoice != 91 {
 			fmt.Println("Only options available 87, 89, 91")
 			continue
 		}
