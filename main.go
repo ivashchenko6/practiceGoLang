@@ -9,11 +9,17 @@ import (
 )
 
 func main() {
-	var mainCar car.Car = car.Car{CarBrand: "Kia", CarYear: 2024, CarModel: "Forte GT-line", FuelCapacity: 400, CurrentFuel: 305}
-	var shell gasStation.GasStation = gasStation.GasStation{GasTypes: []int{87, 89, 91}, GasPrices: []float64{3.99, 4.19, 4.50}}
-	gasType, gasPrice := getCurrentGasInformation(shell) //Возвращает тип бензина и стоимость
 
-	fmt.Println(mainCar, gasType, gasPrice)
+	budget := 100.5
+	var mainCar car.Car = car.Car{CarBrand: "Kia", CarYear: 2024, CarModel: "Forte GT-line", MaxFuelCapacity: 400, CurrentFuel: 305}
+	var shell gasStation.GasStation = gasStation.GasStation{GasTypes: []int{87, 89, 91}, GasPrices: []float64{3.99, 4.19, 4.50}}
+	gasType, _ := getCurrentGasInformation(shell) //Возвращает тип бензина и стоимость
+
+	shell.RefuelVehicle(&budget, gasType, &mainCar)
+
+	fmt.Println("Budget: ", budget)
+	fmt.Println(mainCar)
+
 }
 
 func getCurrentGasInformation(currentGasolineStation gasStation.GasStation) (int, float64) { //Возвращает выбранный Бензин и Стоимость
@@ -40,7 +46,6 @@ func getCurrentGasInformation(currentGasolineStation gasStation.GasStation) (int
 			fmt.Print(err)
 			panic(err)
 		}
-		fmt.Printf("Your gas type is %d, Price: %.2f", gasTypes[index], gasPrices[index])
 		return gasTypes[index], gasPrices[index]
 	}
 
